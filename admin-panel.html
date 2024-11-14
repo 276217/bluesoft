@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <h1>Admin Panel</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Add New Program</h2>
+            <form id="addProgramForm">
+                <label for="programName">Program Name:</label>
+                <input type="text" id="programName" required><br><br>
+
+                <label for="programDescription">Description:</label>
+                <textarea id="programDescription" required></textarea><br><br>
+
+                <label for="programDate">Release Date:</label>
+                <input type="date" id="programDate" required><br><br>
+
+                <label for="fileUpload">Upload File:</label>
+                <input type="file" id="fileUpload" required><br><br>
+
+                <button type="submit">Add Program</button>
+            </form>
+        </section>
+
+        <section id="programsList">
+            <h2>Programs List</h2>
+            <ul id="programs"></ul>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

